@@ -104,7 +104,7 @@ services:
       - "8888:8888"
       - "4040-4080:4040-4080"
     volumes:
-      - ../notebooks_testing:/home/jovyan/work/data/
+      - ../notebooks_testing:/home/jovyan/work/notebooks/
       - ../spark/resources/data:/home/jovyan/work/data/
 
   monogdb:
