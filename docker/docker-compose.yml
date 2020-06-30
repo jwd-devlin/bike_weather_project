@@ -107,5 +107,12 @@ services:
       - ../notebooks_testing:/notebooks_testing/
       - ../spark/resources/data:/resources/data/
 
+  monogdb:
+    image: bitnami/mongodb:latest
+    networks:
+      - default_net
+    ports:
+      - "27017:27017"
+
 networks:
   default_net:
