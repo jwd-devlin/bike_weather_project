@@ -8,7 +8,7 @@ from fetch_source_data.operators.citi_bike_data_fetcher_operator import CitiBike
 # Parameters
 ###############################################
 file_path = "/usr/local/spark/resources/data/"
-
+weather_api = ""
 ###############################################
 # DAG Definition
 ###############################################
@@ -35,6 +35,7 @@ bike = CitiBikeDataFetcherOperator(task_id="bike_data",
 
 weather = WeatherDataNYCFetcherOperator(task_id="weather_data",
                                         provide_context=True,
+                                        api_key = weather_api,
                                         dag=dag)
 
 end = DummyOperator(task_id="end", dag=dag)
