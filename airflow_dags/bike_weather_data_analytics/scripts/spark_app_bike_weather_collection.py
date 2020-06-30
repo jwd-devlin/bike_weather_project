@@ -1,6 +1,7 @@
 import pyspark
 import sys
 
+
 class BikeWeatherCollectionCreate:
     def __init__(self, database: str):
         self.database = database

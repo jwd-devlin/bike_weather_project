@@ -2,6 +2,7 @@ import pyspark
 import sys
 from pyspark.sql import functions as F
 
+
 class BikeWeatherAnalyticsCreate:
     def __init__(self, database: str):
         self.database = database
@@ -16,9 +17,9 @@ class BikeWeatherAnalyticsCreate:
 
     def __average_daily_trip_duration_plus_count(self, df_bike_weather_collection: pyspark.sql.DataFrame,
                                                  bike_weather_analytics_collection:str):
-        average_daily_bike_clean_data = df_bike_weather_collection.select("weather_date",
+        average_daily_bike_clean_data = df_bike_weather_collection.select("_id","weather_date",
                                                                           "tripduration").groupBy("weather_date").agg(
-            F.mean('tripduration'), F.count("starttime"))
+            F.mean('tripduration').alias("avg_trip_duration"), F.countDistinct("_id").alias("num_of_riders"))
         average_daily_bike_clean_data.write.format("mongo").option("collection",
                                                             bike_weather_analytics_collection).mode("append").save()
 
@@ -30,5 +31,5 @@ class BikeWeatherAnalyticsCreate:
 
 
 if __name__ == '__main__':
-    BikeWeatherAnalyticsCreate(database="local").execute(df_bike_weather_collection=sys.argv[1],
-                                                         bike_weather_analytics_collection = sys.argv[2])
+    BikeWeatherAnalyticsCreate(database="local").execute(bike_weather_collection=sys.argv[1],
+                                                         bike_weather_analytics_collection=sys.argv[2])
