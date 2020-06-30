@@ -104,8 +104,8 @@ services:
       - "8888:8888"
       - "4040-4080:4040-4080"
     volumes:
-      - ../notebooks_testing:/notebooks_testing/
-      - ../spark/resources/data:/resources/data/
+      - ../notebooks_testing:/home/jovyan/work/data/
+      - ../spark/resources/data:/home/jovyan/work/data/
 
   monogdb:
     image: bitnami/mongodb:latest
