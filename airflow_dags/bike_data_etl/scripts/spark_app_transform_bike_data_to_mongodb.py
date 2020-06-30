@@ -57,11 +57,11 @@ class TransformBikeDataToMongodb:
         # check date quality
         df_cleaned_normalised_date= self.__transform_date_data(df_cleaned_data)
 
-        df_average_normalised_date_daily= df_cleaned_normalised_date.select("weather_date", "tripduration").groupBy(
-            "weather_date").agg(F.mean('tripduration'))
+        #df_average_normalised_date_daily= df_cleaned_normalised_date.select("weather_date", "tripduration").groupBy(
+        #    "weather_date").agg(F.mean('tripduration'))
 
         # load into mongodb
-        df_average_normalised_date_daily.write.format("mongo").mode("append").save()
+        df_cleaned_normalised_date.write.format("mongo").mode("append").save()
 
         self.spark.stop()
 
