@@ -18,8 +18,8 @@ class BikeWeatherAnalyticsCreate:
     def __average_daily_trip_duration_plus_count(self, df_bike_weather_collection: pyspark.sql.DataFrame,
                                                  bike_weather_analytics_collection:str):
         average_daily_bike_clean_data = df_bike_weather_collection.select("_id","weather_date",
-                                                                          "tripduration").groupBy("weather_date").agg(
-            F.mean('tripduration').alias("avg_trip_duration"), F.countDistinct("_id").alias("num_of_riders"))
+                                                                          "tripduration", "tavg").groupBy("weather_date").agg(
+            F.mean('tripduration').alias("avg_trip_duration"), F.mean("tavg").alias("avg_temperature"))
         average_daily_bike_clean_data.write.format("mongo").option("collection",
                                                             bike_weather_analytics_collection).mode("append").save()
 
